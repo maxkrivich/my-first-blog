@@ -1,5 +1,7 @@
-$('.nav.navbar-nav > li').on('click', function(e) {
-  e.preventDefault();
-  $('.nav.navbar-nav > li').removeClass('active');
-  $(this).addClass('active');
+$(document).ready(function() {
+  var url = window.location;
+  $('.nav.navbar-nav > li a[href="' + url + '"]').parent().addClass('active');
+  $('.nav.navbar-nav > li a').filter(function() {
+    return this.href == url;
+  }).parent().addClass('active');
 });

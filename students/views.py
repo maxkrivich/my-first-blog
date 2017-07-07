@@ -8,11 +8,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 def student_list(request):
     students = Student.objects.all().order_by("pk")
+    # courses = Course.objects.filter(student=pk) #TODO подумать над этим
     return render(request, 'students/student_list.html', {'stud': students})
 
 
 def student_detail(request, pk):
     stud = get_object_or_404(Student, pk=pk)
     courses = Course.objects.filter(student=pk)
-    print(courses)
-    return render(request, 'students/student_detail.html', {'stud': stud, 'course':courses})
+    # print(courses)
+    return render(request, 'students/student_detail.html', {'stud': stud, 'course': courses})
