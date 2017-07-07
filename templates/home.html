@@ -1,4 +1,6 @@
-{% extends 'index.html' %} {% block content %}
+{% extends 'index.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
 <div class="panel-group">
   <div class="panel panel-default">
     <div class="panel-heading">PyCloud - test test test </div>
@@ -7,12 +9,26 @@
       fully these way nay thing seems.
     </div>
   </div>
-</br>
-  <ul class="list-group">
-    {% for course in courses %}
-  <li class="list-group-item">{{ course.name }}</li>
-  {% endfor %}
-</ul>
+  </br>
+
+<h2>Attend courses:</h2>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+      <tr>
+        <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.name }}</a></td>
+        <td>{{ course.short_description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </ul>
 
 
   {% endblock %}

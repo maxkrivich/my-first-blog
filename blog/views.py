@@ -1,5 +1,6 @@
 
 from django.utils import timezone
+from django.http import HttpResponse
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
@@ -14,8 +15,11 @@ def post_list(request):
 
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    # post = get_object_or_404(Post, pk=pk)
+    if Post.objects.filter(pk=pk).exists():
+        return render(request, 'blog/post_detail.html', {'post': Post.objects.get(pk=pk)})
+    else:
+        return HttpResponse('Page does not exist')
 
 
 @login_required
