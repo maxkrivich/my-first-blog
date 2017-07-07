@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block title %}Students{% endblock%}
+{% block content %}
+<h2>List of students:</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Skype</th>
+        <th>Courses</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in stud %}
+      <tr>
+        <td>{{ s.pk }}</td>
+        <td><a href="{% url 'student_detail' pk=s.pk %}">{{ s }}</a></td>
+        <td>{{ s.address }}</td>
+        <td>{{ s.skype }}</td>
+        <td> TODO </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </ul>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth import views as v1
 from . import views as v2
 from courses import views as v3
+from students import views as v4
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -14,4 +15,6 @@ urlpatterns = [
     url(r'^$', v2.get_home_page, name='home'),
     url(r'^contact/', v2.get_contact, name='contact'),
     url(r'^course/(?P<pk>\d+)', v3.course_detail, name='course_detail'),
+    url(r'^students/(?P<pk>\d+)', v4.student_detail, name='student_detail'),
+    url(r'^students/$', v4.student_list, name='student_list'),
 ]

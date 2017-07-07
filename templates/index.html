@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>{% block title %}{% endblock %} | PyCloud</title>
+  <title>{% block title %}{% endblock %} | CloudCourses</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,14 +30,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="#">PyCloud</a>
+
+        <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud"></span> Cloud Courses</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">Home</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/blog/">Blog</a></li>
-          <li><a href="#">Students</a></li>
+          <li><a href="/students/">Students</a></li>
           <li><a href="#">Feedback</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -45,19 +46,16 @@
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="/admin/">{{ user.username }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">options 1</a></li>
-              <li><a href="#">options 2</a></li>
-              <li><a href="#">options 3</a></li>
+              <li><a href="admin/" class="top-menu"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+              <li><a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Add post</a></li>
+              <li><a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span> View drafts</a></li>
+              <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span></a></li>
+          <!-- <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span></a></li> -->
           {% else %}
           <!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
           <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          {% endif %}
-          {% if user.is_authenticated %}
-          <li><a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a></li>
-          <li><a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a></li>
           {% endif %}
         </ul>
       </div>

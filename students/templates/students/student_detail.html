@@ -1,0 +1,47 @@
+{% extends 'index.html' %} {% block title %}Student{% endblock%} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 blog-main">
+      <h1 class="page-title">{{ stud }}</h1>
+      <br>
+    </div>
+    <div class="col-sm-6">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td>Birth Date</td>
+            <td>{{ stud.date_of_birth }}</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>{{ stud.address }}</td>
+          </tr>
+          <tr>
+            <td>E-mail</td>
+            <td>{{ stud.email }}</td>
+          </tr>
+          <tr>
+            <td>Skype</td>
+            <td>{{ stud.skype }}</td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td>{{ stud.phone }}</td>
+          </tr>
+          <tr>
+            <td>Courses</td>
+            <td>
+              {% for c in course %}
+              <a href="{% url 'course_detail' pk=c.pk %}">
+								{{ c.name }}</a><br/>
+              {% endfor %}
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
