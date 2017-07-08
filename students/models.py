@@ -13,3 +13,6 @@ class Student(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.surname, self.name)
+     
+    def full_name(self):
+    	return str(self)

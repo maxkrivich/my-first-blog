@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import Student
 
-class StudenAdmin(admin.ModelAdmin):
+class StudentAdmin(admin.ModelAdmin):
+	model = Student
 	search_fields = ['surname', 'email',]
-	list_display = ('name', 'email', 'skype',)
+	list_display = ('full_name', 'email', 'skype',)
 	list_filter = ('courses',)
 	filter_horizontal = ('courses',)
 	fieldsets = [
@@ -13,4 +14,4 @@ class StudenAdmin(admin.ModelAdmin):
 	]
 
 
-admin.site.register(Student, StudenAdmin)
+admin.site.register(Student, StudentAdmin)
