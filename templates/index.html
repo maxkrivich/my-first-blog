@@ -47,7 +47,7 @@
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="/admin/">{{ user.username }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="admin/" class="top-menu"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+              <li><a href="/admin/" class="top-menu"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
               <li><a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Add post</a></li>
               <li><a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span> View drafts</a></li>
               <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
