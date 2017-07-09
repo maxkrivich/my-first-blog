@@ -31,10 +31,9 @@
           <tr>
             <td>Courses</td>
             <td>
-              {% for c in course %}
-              <a href="{% url 'course_detail' pk=c.pk %}">
-								{{ c.name }}</a><br/>
-              {% endfor %}
+              {% for s in stud.courses.all %}
+              <a href="{% url 'course_detail' pk=s.pk %}">
+                {{ s.name }}</a><br/> {% endfor %}
             </td>
           </tr>
 

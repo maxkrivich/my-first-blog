@@ -1,0 +1,30 @@
+{% extends "home.html" %} {% block courses %}
+
+
+<h2>Attend courses:</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for course in courses %}
+    <tr>
+      <td> {{ course.pk }}</td>
+      <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.name }}</a></td>
+      <td>{{ course.short_description }}</td>
+      {% if user.is_authenticated %}
+      <td>
+        <a class="btn btn-info" href="{% url 'course_edit' pk=course.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+        <a class="btn btn-danger" href="{% url 'course_delete' pk=course.pk %}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</ul>
+{% endblock %}

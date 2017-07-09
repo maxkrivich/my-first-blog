@@ -1,0 +1,6 @@
+{% extends 'index.html' %} {% block title %} Add lesson{% endblock%} {% block content %}
+<h1>New lessons</h1>
+<form method="POST" class="lesson-form">{% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="save btn btn-default">Save</button>
+</form>
+{% endblock %}

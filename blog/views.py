@@ -36,6 +36,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
+
 @login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -50,6 +51,7 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
 
 @login_required
 def add_comment_to_post(request, pk):

@@ -1,30 +1,36 @@
-{% extends 'index.html' %}
-{% block title %}Students{% endblock%}
-{% block content %}
+{% extends 'index.html' %} {% block title %}Students{% endblock%} {% block content %}
 <h2>List of students:</h2>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Skype</th>
-        <th>Courses</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for s in stud %}
-      <tr>
-        <td>{{ s.pk }}</td>
-        <td><a href="{% url 'student_detail' pk=s.pk %}">{{ s }}</a></td>
-        <td>{{ s.address }}</td>
-        <td>{{ s.skype }}</td>
-        <td> {% for sc in s.courses.all %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Skype</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in stud %}
+    <tr>
+      <td>{{ s.pk }}</td>
+      <td><a href="{% url 'student_detail' pk=s.pk %}">{{ s }}</a></td>
+      <td>{{ s.address }}</td>
+      <td>{{ s.skype }}</td>
+      <td> {% for sc in s.courses.all %}
         <a href="{% url 'course_detail' pk=sc.pk %}">
-          {{ sc.name }}</a><br/>
-        {% endfor %} </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+          {{ sc.name }}</a><br/> {% endfor %} </td>
+      {% if user.is_authenticated %}
+      <td>
+        <a class="btn btn-info" href="{% url 'student_edit' pk=s.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+        <a class="btn btn-danger" href="{% url 'student_delete' pk=s.pk %}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if user.is_authenticated %}
+<a type="button" class="btn btn-info btn-lg"  href="{% url "student_new"%}"><span class="glyphicon glyphicon-plus"></span> Add new student</a>
+{% endif %}
 {% endblock %}

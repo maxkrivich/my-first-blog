@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block title %}Course edit{% endblock%}
+{% block content %}
+
+<form method="POST" class="course-form">{% csrf_token %}
+  {{form.as_p}}
+<button type="submit" class="save btn btn-default">Save</button>
+</form>
+
+{% endblock%}
