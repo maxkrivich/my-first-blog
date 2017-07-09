@@ -7,16 +7,11 @@
       </div>
     </div>
     <div class="row">
-      <!-- <div class="col-sm-2 col-md-2">
-        <a href="#" class="thumbnail">
-            <img src="http://placehold.it/260x180" alt="">
-        </a>
-      </div> -->
       <div class="col-sm-6 col-md-6">
         <p>
         {{ post.text|linebreaksbr }}
         </p>
-        <p><a class="btn btn-default" href="{% url 'post_detail' pk=post.pk %}">Read more</a></p>
+        <p><a class="btn btn-link btn-sm" href="{% url 'post_detail' pk=post.pk %}">Read more</a></p>
       </div>
     </div>
     <div class="row">

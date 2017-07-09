@@ -1,0 +1,22 @@
+{% extends "index.html" %} {% block title %}Quadratic equation{% endblock%} {% block content %}
+
+<form>
+  {{form.as_p}}
+  <input type="submit" value="Solve" />
+</form>
+{%if not is_zero%}
+
+{% if dis != None %}
+<p><b>Discriminant:</b> {{ dis }}</p>
+{% if dis < 0 %}
+<p>The quadratic equation has no real solutions</p>
+{%elif dis == 0 %}
+<p><b>Roots:</b> x1 = x2 = {{roots.0}} </p>
+{% else %}
+<p><b>Roots:</b> x1 = {{ roots.0 }}; x2 = {{ roots.1 }}</p>
+{% endif %}
+{% endif %}
+{% else %}
+<p>A koeff should not equals to zero</p>
+{% endif %}
+{% endblock%}

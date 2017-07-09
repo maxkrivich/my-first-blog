@@ -12,8 +12,11 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls')),
     url(r'^students/', include('students.urls')),
     url(r'^courses/', include('courses.urls')),
+    url(r'^quadratic/', include('quadratic.urls')),
+    url(r'^feedback/', include('feedback.urls')),
     url(r'^accounts/login/$', v1.login, name='login'),
-    url(r'^accounts/logout/$', v1.logout, name='logout', kwargs={'next_page': '/'}),
+    url(r'^accounts/logout/$', v1.logout,
+        name='logout', kwargs={'next_page': '/'}),
     url(r'^$', v2.get_home_page, name='home'),
     url(r'^contact/', v2.get_contact, name='contact'),
 ]

@@ -1,5 +1,8 @@
 {% extends 'index.html' %}
-{% block title %}Course{% endblock %}
+
+{% block title %}{{ course.name }} | Course{% endblock %}
+
+{% block idcourse %}?course_id={{ course.id }} {% endblock %}
 {% block content %}
 
 <div class="panel-group">

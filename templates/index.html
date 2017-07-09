@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <!-- <link rel="stylesheet" href="{% static 'css/index.css' %}" > -->
-  <link rel="stylesheet" href="{% static 'css/login.css' %}" >
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
 
 
@@ -38,9 +38,10 @@
         <ul class="nav navbar-nav">
           <li><a href="/">Home</a></li>
           <li><a href="/contact/">Contact</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/students/">Students</a></li>
+          <li><a href="{% url 'post_list' %}">Blog</a></li>
+          <li><a href="{% url 'student_list' %}{% block idcourse %}{% endblock%}">Students</a></li>
           <li><a href="#">Feedback</a></li>
+          <li><a href="{% url 'quadratic_solver' %}">Quadratic</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
