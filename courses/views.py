@@ -73,7 +73,6 @@ def lesson_edit(request, pk):
         form = LessonForm(request.POST, instance=lesson)
         if form.is_valid():
             less = form.save(commit=False)
-            less.course = course
             less.save()
             return redirect('course_detail', pk=lesson.course.pk)
     else:

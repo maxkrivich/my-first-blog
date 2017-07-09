@@ -23,6 +23,8 @@
       {% if user.is_authenticated %}
       <td>
         <a class="btn btn-info" href="{% url 'student_edit' pk=s.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+      </td>
+      <td>
         <a class="btn btn-danger" href="{% url 'student_delete' pk=s.pk %}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
       </td>
       {% endif %}
