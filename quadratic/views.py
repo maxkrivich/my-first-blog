@@ -14,19 +14,19 @@ def quadratic_result(request):
             b = form.cleaned_data['b']
             c = form.cleaned_data['c']
             return render(request, 'quadratic/quadratic.html', {'form': form,
-                                                                'dis': dis(a, b, c),
-                                                                'roots': calc_roots(a, b, c),
+                                                                'dis': __dis(a, b, c),
+                                                                'roots': __calc_roots(a, b, c),
                                                                 'is_zero': flag})
     else:
         form = QuadraticFrom()
     return render(request, 'quadratic/quadratic.html', {'form': form})
 
 
-def dis(a, b, c):
+def __dis(a, b, c):
     return b ** 2 - 4 * a * c
 
 
-def calc_roots(a, b, c):
-    d = dis(a, b, c)
+def __calc_roots(a, b, c):
+    d = __dis(a, b, c)
     if d >= 0:
         return ((-b - d**0.5) * a / 2, (- b + d**0.5) * a / 2)

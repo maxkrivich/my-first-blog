@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'students',
     'feedback',
     'quadratic',
+    'coaches',
 ]
 
 MIDDLEWARE = [

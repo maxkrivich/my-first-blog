@@ -10,9 +10,51 @@
     <div class="panel-heading">{{course.name}}</div>
     <div class="panel-body">
       {{course.description}}
+
+      </ul>
     </div>
   </div>
-  <h1>Plan:</h1>
+<hr>
+{% if course.coach is not None or course.assiatant is not None %}
+  <h2>Teachers:</h2>
+  <p/>
+  {% if course.coach is not None %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th<small><b>Coach</b></small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <a href="{% url 'coach_detail' pk=course.coach.pk %}"> {{ course.coach }} </a>
+        <p>{{ course.coach.description }}</p>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+  {% if course.assistant is not None %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th<small><b>Assistant</b></small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <a href="{% url 'coach_detail' pk=course.assistant.pk %}"> {{ course.assistant }} </a>
+        <p>{{ course.assistant.description }}</p>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+{% endif %}
+<hr>
+  <h2>Plan:</h2>
   <table class="table table-hover">
     <thead>
       <tr>

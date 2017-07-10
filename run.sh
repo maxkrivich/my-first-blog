@@ -7,5 +7,5 @@ else
 fi
 
 echo "run server on $port"
-
+find . -name \*.pyc -delete
 python manage.py runserver "0:$port"

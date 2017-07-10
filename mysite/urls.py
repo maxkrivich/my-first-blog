@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^courses/', include('courses.urls')),
     url(r'^quadratic/', include('quadratic.urls')),
     url(r'^feedback/', include('feedback.urls')),
+    url(r'^coaches/', include('coaches.urls')),
     url(r'^accounts/login/$', v1.login, name='login'),
     url(r'^accounts/logout/$', v1.logout,
         name='logout', kwargs={'next_page': '/'}),
