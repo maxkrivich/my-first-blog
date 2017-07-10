@@ -9,14 +9,17 @@
   color: white;
 }*/
 
-div.well{
+div.well {
   height: 250px;
 }
 
 .Absolute-Center {
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .Absolute-Center.is-Responsive {
@@ -26,6 +29,11 @@ div.well{
   max-width: 400px;
   padding: 40px;
 }
+
+.login-error-text {
+  color: #FF0000;
+}
+
 
 /*#logo-container{
   margin: auto;

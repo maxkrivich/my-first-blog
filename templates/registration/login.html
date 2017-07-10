@@ -1,12 +1,8 @@
-{% extends 'index.html' %} {% block title %}Login{% endblock%} {% block content %} {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
+{% extends 'index.html' %} {% block title %}Login{% endblock%} {% block content %}
 <div class="container">
   <div class="row">
     <div class="Absolute-Center is-Responsive">
-      <div id="logo-container"></div>
-      <div class="col-sm-12 col-md-10 col-md-offset-1">
+      <div class="col-sm-17 col-md-20 col-md-offset-1">
         <form id="loginForm" name="LoginForm" action="{% url 'login' %}" method="post">
           {% csrf_token %}
           <div class="form-group input-group">
@@ -21,6 +17,9 @@
             <button type="submit" class="btn btn-def btn-block">Login</button>
           </div>
           <input type="hidden" name="next" value="{{ next }}" />
+          {% if form.errors %}
+          <p class="login-error-text">Your username or password didn't match. Please try again.</p>
+          {% endif %}
         </form>
       </div>
     </div>

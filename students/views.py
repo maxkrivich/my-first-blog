@@ -38,7 +38,7 @@ def student_new(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             stud = form.save(commit=False)
-            form.save_m2m()
+            form.save()
             stud.save()
             return redirect('student_detail', pk=stud.pk)
     else:

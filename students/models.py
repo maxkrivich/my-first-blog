@@ -9,7 +9,7 @@ class Student(models.Model):
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=150)
     skype = models.CharField(max_length=50)
-    courses = models.ManyToManyField('courses.Course')
+    courses = models.ManyToManyField('courses.Course', blank=True, null=True)
 
     def __str__(self):
         return "{} {}".format(self.surname, self.name)
