@@ -21,13 +21,10 @@ class FeedbackView(CreateView):
 
     def form_valid(self, form):
         form = super(FeedbackView, self).form_valid(form)
-        message = "mailer: {mailer}\n\
-                    email: {email}\n\
-                    message: {message}\n\
-                    date: {date}\n".format(mailer=self.object.mailer,
-                                           email=self.object.email,
-                                           message=self.object.message,
-                                           date=self.object.date)
+        message = "mailer: {mailer}\nemail: {email}\nmessage: {message}\ndate: {date}\n".format(mailer=self.object.mailer,
+                                                                                                email=self.object.email,
+                                                                                                message=self.object.message,
+                                                                                                date=self.object.date)
         mail_admins(self.object.subject, message, fail_silently=True)
         messages.success(
             self.request, 'Thank you for your feedback! We will keep in touch with you very soon!')
