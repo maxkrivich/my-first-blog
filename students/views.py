@@ -50,7 +50,7 @@ def student_new(request):
             form.save()
             stud.save()
             messages.success(
-                request, 'Student {} successfully added'.format(stud.full_name))
+                request, 'Student {} successfully added'.format(stud.full_name()))
             return redirect('student_list')
     else:
         form = StudentForm()
