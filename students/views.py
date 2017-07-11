@@ -1,12 +1,51 @@
-import re
 from django.shortcuts import render
 from .models import Student
 from .forms import StudentForm
 from courses.models import Course, Lesson
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
+
+from django.contrib import messages
+from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
+from django.core.urlresolvers import reverse_lazy
+
+
+class StudentListView(ListView):
+    model = Student
+    paginate_by = 2
+    template_name = 'students/student_list.html'
+
+    def get_queryset(self):
+        course_id = self.request.GET.get('course_id')
+        if course_id:
+            students = Student.objects.filter(course=course_id)
+        else:
+            students = Student.objects.all()
+        return students
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        course_id = self.request.GET.get('course_id')
+        if course_id:
+            students = Student.objects.filter(courses=self.object.pk)
+            context['title'] = 'Students on {}:'.format(self.object.name)
+        else:
+            students = 'List of students:'
+            students = Student.objects.all().order_by("pk")
+
+        paginator = Paginator(students, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            students = paginator.page(page)
+        except PageNotAnInteger:
+            students = paginator.page(1)
+        except EmptyPage:
+            students = paginator.page(paginator.num_pages)
+        context['stud'] = students
+        return context
 
 
 def student_list(request):
@@ -34,11 +73,38 @@ def students_on_course(request, pk):
     return render(request, 'students/student_list.html', {'stud': stud, 'title': 'test'})
 
 
+class StudentDetailView(DetailView):
+    model = Student
+    template_name = 'students/student_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDetailView, self).get_context_data(**kwargs)
+        context["stud"] = get_object_or_404(Student, pk=self.object.pk)
+        return context
+
+
 def student_detail(request, pk):
     stud = get_object_or_404(Student, pk=pk)
     # courses = Course.objects.filter(student=pk)
     # # print(courses)
     return render(request, 'students/student_detail.html', {'stud': stud})
+
+
+class StudentCreateView(CreateView):
+    model = Student
+    template_name = 'students/student_edit.html'
+    form_class = StudentForm
+    success_url = reverse_lazy('student_list')
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentCreateView, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form = super(StudentCreateView, self).form_valid(form)
+        messages.success(self.request, 'Student {} successfully added'.format(
+            self.object.full_name()))
+        return form
 
 
 @login_required
@@ -57,6 +123,22 @@ def student_new(request):
     return render(request, 'students/student_edit.html', {'form': form})
 
 
+class StudentUpdateView(UpdateView):
+    model = Student
+    template_name = 'students/student_edit.html'
+    form_class = StudentForm
+    success_url = '#'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentUpdateView, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form = super(StudentUpdateView, self).form_valid(form)
+        messages.success(self.request, 'Information successfully changed')
+        return form
+
+
 @login_required
 def student_edit(request, pk):
     stud = get_object_or_404(Student, pk=pk)
@@ -71,6 +153,23 @@ def student_edit(request, pk):
     else:
         form = StudentForm(instance=stud)
     return render(request, 'students/student_edit.html', {'form': form})
+
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'students/student_delete.html'
+    success_url = reverse_lazy('student_list')
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDeleteView, self).get_context_data(**kwargs)
+        context["stud"] = self.object
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        res = super(StudentDeleteView, self).delete(request, *args, **kwargs)
+        messages.success(self.request, 'Student {} successfully removed'.format(
+            self.object.full_name()))
+        return res
 
 
 @login_required

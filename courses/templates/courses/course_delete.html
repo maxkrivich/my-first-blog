@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block title %}Delete course{% endblock %}
+{% block content %}
+
+<form method="POST" class="course-delete">
+{% csrf_token %}
+<h1> Course will be deleted</h1>
+<hr>
+<button type="submit" class="delete btn btn-default">Delete course</button>
+</form>
+
+{% endblock %}

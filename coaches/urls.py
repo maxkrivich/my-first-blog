@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from . import views
+from .views import CoachDetailView
 
 
 urlpatterns = [
-    url(r'^(?P<pk>\d+)', views.coach_detail, name='coach_detail'),
+    url(r'^(?P<pk>\d+)', CoachDetailView.as_view(), name='coach_detail'),
 ]

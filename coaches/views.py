@@ -1,15 +1,20 @@
-from django.utils import timezone
-from courses.models import Course, Lesson
 from coaches.models import Coach
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from courses.models import Course, Lesson
+
+from django.views.generic.detail import DetailView
 from django.shortcuts import render, get_object_or_404, redirect
 
 
-def coach_detail(request, pk):
-    coach = get_object_or_404(Coach, pk=pk)
-    courses = Course.objects.filter(coach=coach)
-    assistant = Course.objects.filter(assistant=coach)
-    return render(request, 'coaches/coach_detail.html', {'coach': coach,
-                                                         'courses': courses,
-                                                         'assistant': assistant})
+class CoachDetailView(DetailView):
+    model = Coach
+    template_name = 'coaches/coach_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CoachDetailView, self).get_context_data(**kwargs)
+        coach = get_object_or_404(Coach, pk=self.object.pk)
+        courses = Course.objects.filter(coach=coach)
+        assistant = Course.objects.filter(assistant=coach)
+        context["coach"] = coach
+        context["courses"] = courses
+        context["assistant"] = assistant
+        return context
