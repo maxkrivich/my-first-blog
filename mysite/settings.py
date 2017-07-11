@@ -133,3 +133,9 @@ LOGIN_REDIRECT_URL = '/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+ADMINS = (('MAX', 'maxkrivich@gmail.com'))
+
+EMAIL_HOST = 'localhost'
+
+EMAIL_PORT = 1025

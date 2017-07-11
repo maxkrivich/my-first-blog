@@ -3,8 +3,9 @@ from django.shortcuts import render
 from .models import Student
 from .forms import StudentForm
 from courses.models import Course, Lesson
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
 
@@ -16,6 +17,14 @@ def student_list(request):
     else:
         title = 'List of students:'
         students = Student.objects.all().order_by("pk")
+    paginator = Paginator(students, 2)
+    page = request.GET.get('page')
+    try:
+        students = paginator.page(page)
+    except PageNotAnInteger:
+        students = paginator.page(1)
+    except EmptyPage:
+        students = paginator.page(paginator.num_pages)
     return render(request, 'students/student_list.html', {'stud': students, 'title': title})
 
 
@@ -40,7 +49,9 @@ def student_new(request):
             stud = form.save(commit=False)
             form.save()
             stud.save()
-            return redirect('student_detail', pk=stud.pk)
+            messages.success(
+                request, 'Student {} successfully added'.format(stud.full_name))
+            return redirect('student_list')
     else:
         form = StudentForm()
     return render(request, 'students/student_edit.html', {'form': form})
@@ -55,7 +66,8 @@ def student_edit(request, pk):
             stud = form.save(commit=False)
             form.save_m2m()
             stud.save()
-            return redirect('student_detail', pk=stud.pk)
+            messages.success(request, 'Information successfully changed')
+            return redirect('student_edit', pk=stud.pk)
     else:
         form = StudentForm(instance=stud)
     return render(request, 'students/student_edit.html', {'form': form})
@@ -64,5 +76,10 @@ def student_edit(request, pk):
 @login_required
 def student_delete(request, pk):
     stud = get_object_or_404(Student, pk=pk)
-    stud.delete()
-    return redirect('student_list')
+    if request.method == "POST":
+        messages.success(
+            request, 'Student {} successfully removed'.format(stud.full_name()))
+        stud.delete()
+        return redirect('student_list')
+    else:
+        return render(request, 'students/student_delete.html', {'stud': stud})

@@ -1,5 +1,7 @@
 {% extends "index.html" %} {% block title %}Student edit{% endblock%} {% block content %}
-
+{% for message in messages %}
+<div class="alert alert-success" role="alert">{{ message }}</div>
+{% endfor %}
 <form method="POST" class="student-form">{% csrf_token %} {{form.as_p}}
   <button type="submit" class="save btn btn-default">Save</button>
 </form>

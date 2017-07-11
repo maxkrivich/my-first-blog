@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block title %}{{ stud.full_name }} |Delete student{% endblock %}
+{% block content %}
+
+<form method="POST" class="student_delete">
+{% csrf_token %}
+<h1> Student {{ stud.full_name }} will be deleted</h1>
+<hr>
+<button type="submit" class="delete btn btn-default">Delete student</button>
+</form>
+
+{% endblock %}

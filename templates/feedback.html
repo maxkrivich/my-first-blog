@@ -1,0 +1,12 @@
+{% extends 'index.html' %} {% block title %}Feedback{% endblock %} {% block content %} {% if messages %}
+<p class="messages">
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">{{ message }}</div>
+  {% endfor %}
+</p>
+{% endif %}
+<form method="POST" class="feedback-form">
+  {% csrf_token %} {{form.as_p}}
+  <button type="submit" class="save btn btn-default">Send</button>
+</form>
+{% endblock %}

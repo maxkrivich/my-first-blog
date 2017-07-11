@@ -40,7 +40,7 @@
           <li><a href="/contact/">Contact</a></li>
           <li><a href="{% url 'post_list' %}">Blog</a></li>
           <li><a href="{% url 'student_list' %}{% block idcourse %}{% endblock%}">Students</a></li>
-          <li><a href="#">Feedback</a></li>
+          <li><a href="{% url 'feedback' %}">Feedback</a></li>
           <li><a href="{% url 'quadratic_solver' %}">Quadratic</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

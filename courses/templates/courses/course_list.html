@@ -14,7 +14,7 @@
     {% for course in courses %}
     <tr>
       <td> {{ course.pk }}</td>
-      <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.name }}</a></td>
+      <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.name | upper}}</a></td>
       <td>{{ course.short_description }}</td>
       {% if user.is_authenticated %}
       <td>
