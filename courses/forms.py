@@ -11,4 +11,4 @@ class CourseForm(forms.ModelForm):
 class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = ('subject', 'description', 'order',)
+        fields = "__all__"

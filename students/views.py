@@ -13,15 +13,37 @@ from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
 
+import os.path
+import logging
+
+log_format = '%(filename)s[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s'
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter(log_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+handler = logging.FileHandler(os.path.join("./", "students_logger.log"), "w", encoding=None, delay="true")
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter(log_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
 class StudentListView(ListView):
     model = Student
     paginate_by = 2
     template_name = 'students/student_list.html'
 
+
     def get_queryset(self):
         course_id = self.request.GET.get('course_id')
-        if course_id:
-            students = Student.objects.filter(course=course_id)
+        if course_id is not None:
+            students = Student.objects.filter(courses=course_id)
         else:
             students = Student.objects.all()
         return students
@@ -29,22 +51,14 @@ class StudentListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(StudentListView, self).get_context_data(**kwargs)
         course_id = self.request.GET.get('course_id')
-        if course_id:
-            students = Student.objects.filter(courses=self.object.pk)
-            context['title'] = 'Students on {}:'.format(self.object.name)
+        if course_id is not None:
+            course = get_object_or_404(Course, pk=course_id)
+            pagination_prefix = '?course_id={}&'.format(course_id)
+            context['title'] = 'Students on {}:'.format(course.name)
         else:
-            students = 'List of students:'
-            students = Student.objects.all().order_by("pk")
-
-        paginator = Paginator(students, self.paginate_by)
-        page = self.request.GET.get('page')
-        try:
-            students = paginator.page(page)
-        except PageNotAnInteger:
-            students = paginator.page(1)
-        except EmptyPage:
-            students = paginator.page(paginator.num_pages)
-        context['stud'] = students
+            pagination_prefix = '?'
+            context['title'] ='List of students:'
+        context['pagination_prefix'] = pagination_prefix
         return context
 
 
@@ -78,6 +92,10 @@ class StudentDetailView(DetailView):
     template_name = 'students/student_detail.html'
 
     def get_context_data(self, **kwargs):
+        logger.debug('Students detail view has been debugged!')
+        logger.info('Logger of students detail view informs you!')
+        logger.warning('Logger of students detail view warns you!')
+        logger.error('Students detail view went wrong!')
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context["stud"] = get_object_or_404(Student, pk=self.object.pk)
         return context

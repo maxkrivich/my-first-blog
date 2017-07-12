@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for s in stud %}
+    {% for s in student_list %}
     <tr>
       <td>{{ s.pk }}</td>
       <td><a href="{% url 'student_detail' pk=s.pk %}">{{ s }}</a></td>
@@ -37,18 +37,18 @@
   </tbody>
 </table>
 <ul class="pagination">
-  {% if stud.has_previous %}
-  <li><a href="?page={{ stud.previous_page_number }}">«</a></li>
+  {% if page_obj.has_previous %}
+  <li><a href="{{ pagination_prefix }}page={{ stud.previous_page_number }}">«</a></li>
   {% endif %}
-  {% for num in stud.paginator.page_range %}
-      {% if num == stud.number %}
+  {% for num in page_obj.paginator.page_range %}
+      {% if num == page_obj.number %}
           <li class="active"><a href="#">{{ num }}</a></li>
       {% else %}
-          <li><a href="?page={{ num }}">{{ num }}</a></li>
+          <li><a href="{{ pagination_prefix }}page={{ num }}">{{ num }}</a></li>
       {% endif %}
   {% endfor %}
-  {% if stud.has_next %}
-      <li><a href="?page={{ stud.next_page_number }}">»</a></li>
+  {% if page_obj.has_next %}
+      <li><a href="{{ pagination_prefix }}page={{ stud.next_page_number }}">»</a></li>
   {% endif %}
 </ul>
 <br/>

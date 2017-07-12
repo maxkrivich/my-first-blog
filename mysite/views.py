@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 def get_home_page(request):
     course = Course.objects.all()
-    return render(request, 'courses/course_list.html', {'courses': course})
+    return render(request, 'courses/course_list.html', {'course_list': course})
 
 
 def get_contact(request):

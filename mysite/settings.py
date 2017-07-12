@@ -136,9 +136,10 @@ STATICFILES_DIRS = [
 
 ADMINS = (('Max', 'maxkrivich@gmail.com'),
           ('Vova', 'vova.shkvarok@gmail.com'),
-          ('Ivan', 'entick11@gmail.com'))
+          ('Ivan', 'entick11@gmail.com'),
+          ('Tanya', 'tatyana.pikalova2012@gmail.com'))
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
 
 EMAIL_USE_TLS = True
 
@@ -146,5 +147,6 @@ EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST_USER = '1937f167ce4a58749368ca8e815336@gmail.com'
+EMAIL_HOST_USER = '1937f167ce4a58749368ca8e815336'
+
 EMAIL_HOST_PASSWORD = 'a9d05f29fcc6b5f9805e11dd2587d419'

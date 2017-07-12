@@ -11,12 +11,37 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
+import os.path
+import logging
+
+log_format = '%(filename)s[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s'
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter(log_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+handler = logging.FileHandler(os.path.join("./", "courses_logger.log"), "w", encoding=None, delay="true")
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter(log_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
 
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course_detail.html'
 
     def get_context_data(self, **kwargs):
+        logger.debug('Courses detail view has been debugged!')
+        logger.info('Logger of courses detail view informs you!')
+        logger.warning('Logger of courses detail view warns you!')
+        logger.error('Courses detail view went wrong!')
         context = super(CourseDetailView, self).get_context_data(**kwargs)
         course = get_object_or_404(Course, pk=self.object.pk)
         context["course"] = Course.objects.get(pk=self.object.pk)
@@ -27,6 +52,7 @@ class CourseDetailView(DetailView):
 
 class CourseListView(ListView):
     model = Course
+    template_name = 'courses/course_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
@@ -106,7 +132,7 @@ class LessonUpdateView(UpdateView):
         return form
 
 
-class LessonDeleteView(DeleteView):  # TODO add to urls.py
+class LessonDeleteView(DeleteView):
     model = Lesson
     template_name = 'courses/lesson_delete.html'
 
@@ -126,7 +152,7 @@ class LessonDeleteView(DeleteView):  # TODO add to urls.py
         return res
 
 
-class LessonCreateView(CreateView):  # TODO add to urls.py
+class LessonCreateView(CreateView):
     model = Lesson
     form_class = LessonForm
     template_name = 'courses/add_lesson_to_course.html'
