@@ -23,6 +23,9 @@ class StudentListTest(TestCase):
         response = c.get('/students/')
         self.assertEqual(response.status_code, 200)
 
+    def test_student_count(self):
+        self.assertEqual(Student.objects.all().count(), 10)
+
 
 class CoursesDetailTest(TestCase):
     def setUp(self):
@@ -33,6 +36,9 @@ class CoursesDetailTest(TestCase):
                                phone='123456789',
                                address='asdad',
                                skype='skype')
+
+    def test_student_db_is_not_empty(self):
+        self.assertEqual(Student.objects.all().count(), 1)
 
     def test_student_full_name(self):
         student = Student.objects.get(surname='Krivich')
@@ -70,3 +76,16 @@ class CoursesDetailTest(TestCase):
         c = Client()
         response = c.get('/students/1')
         self.assertEqual(response.status_code, 200)
+
+    def test_student_detail(self):
+        student = Student.objects.all().first()
+        c = Client()
+        response = c.get('/students/1')
+        self.assertContains(response, student.full_name())
+        self.assertContains(response, student.skype)
+        self.assertContains(response, student.email)
+
+    def test_student_page_fails(self):
+        c = Client()
+        response = c.get('students/100/')
+        self.assertEqual(response.status_code, 404)

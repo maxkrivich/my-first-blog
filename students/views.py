@@ -12,26 +12,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
-
-import os.path
 import logging
 
-log_format = '%(filename)s[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s'
-
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter(log_format)
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-handler = logging.FileHandler(os.path.join("./", "students_logger.log"), "w", encoding=None, delay="true")
-handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter(log_format)
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 
 class StudentListView(ListView):

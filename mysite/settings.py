@@ -150,3 +150,47 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = '1937f167ce4a58749368ca8e815336'
 
 EMAIL_HOST_PASSWORD = 'a9d05f29fcc6b5f9805e11dd2587d419'
+
+LOGGING = {
+    'version': 1,
+    'loggers':
+        {
+            'courses': {
+                'handlers': ['console', 'file_courses'],
+                'level': 'DEBUG',
+            },
+            'students': {
+                'handlers': ['console', 'file_students'],
+                'level': 'DEBUG',
+            },
+        },
+    'handlers':
+        {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            },
+            'file_courses': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'courses_logger.log'),
+                'formatter': 'simple',
+            },
+            'file_students': {
+                'level': 'WARNING',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'students_logger.log'),
+                'formatter': 'verbose',
+            },
+        },
+    'formatters':
+        {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s \nModule: %(module)s \nFunction: %(funcName)s \nMessage: %(message)s\n\n'
+            },
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            },
+        },
+}
