@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8@g=366h=^b2#tsc4szugj$v$twt-)ivd_hb#e&46$p9u*a!l0'
+SECRET_KEY = '8@g=366h=^b2#tsc4szugj$v$twt-)ivd_hb#e&46$p9u*a!l0' #os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['maxkrivich.pythonanywhere.com', '*']
 
 
 # Application definition
@@ -147,9 +147,9 @@ EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST_USER = '1937f167ce4a58749368ca8e815336'
+EMAIL_HOST_USER = '1937f167ce4a58749368ca8e815336' #os.environ['USER_NAME']
 
-EMAIL_HOST_PASSWORD = 'a9d05f29fcc6b5f9805e11dd2587d419'
+EMAIL_HOST_PASSWORD = 'a9d05f29fcc6b5f9805e11dd2587d419'#os.environ['USER_PASSWORD']
 
 LOGGING = {
     'version': 1,

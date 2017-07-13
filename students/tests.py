@@ -1,22 +1,51 @@
+import random
 import datetime
 from django.test import TestCase, Client
 
 from .models import Student
+from courses.models import Course
+from courses.tests import CoursesFactory
+
+
+class StudentFactory(object):
+
+    def __init__(self):
+        self.students = []
+
+    def __generate_random_string(self, length=10):
+        s = []
+        for i in range(length):
+            s.append(chr(random.randint(ord('A'), ord('z'))))
+        return ''.join(s)
+
+    def create_student(self):
+        return Student.objects.create(name=self.__generate_random_string(),
+                                      surname=self.__generate_random_string(),
+                                      date_of_birth=datetime.datetime.now(),
+                                      email=self.__generate_random_string() + '@mail.com',
+                                      phone=str(random.randint(
+                                          100000, 1000000000)),
+                                      address=self.__generate_random_string(),
+                                      skype=self.__generate_random_string())
+
+    def create_students(self, count=10, clear=False):
+        if clear:
+            self.students = []
+
+        for i in range(count):
+            self.students.append(self.create_student())
+        return self.students
+
+    def add_student_on_course(self, course):
+        if len(self.students):
+            for i in range(3):
+                stud = random.choice(self.students)
 
 
 class StudentListTest(TestCase):
-    def __generate_student(self, count=10):
-        for i in range(count):
-            Student.objects.create(name='name {}'.format(i),
-                                   surname='surname {}'.format(i),
-                                   date_of_birth='2002-11-11'.format(i),
-                                   email='email{}@mail.com'.format(i),
-                                   phone='123456789'.format(i),
-                                   address='add{}'.format(i),
-                                   skype='skype{}'.format(i))
 
     def setUp(self):
-        self.__generate_student()
+        StudentFactory().create_students()
 
     def test_student_list_status_code(self):
         c = Client()
@@ -25,6 +54,19 @@ class StudentListTest(TestCase):
 
     def test_student_count(self):
         self.assertEqual(Student.objects.all().count(), 10)
+
+    def test_student_paginator_existing(self):
+        c = Client()
+        response = c.get('/students/?page=1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_student_paginator_fails(self):
+        c = Client()
+        response = c.get('/students/?page=99999')
+        self.assertEqual(response.status_code, 404)
+
+    def test_student_on_course(self):
+        pass
 
 
 class CoursesDetailTest(TestCase):

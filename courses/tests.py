@@ -1,7 +1,63 @@
+import datetime
+import random
+
 from django.test import TestCase, Client
+from django.contrib.auth.models import User
 
 from .models import Course, Lesson
 from coaches.models import Coach
+
+
+class Util(object):
+    def generate_random_string(self, length=10):
+        s = []
+        for i in range(length):
+            s.append(chr(random.randint(ord('A'), ord('z'))))
+        return ''.join(s)
+
+
+class CoachFactory(Util):
+
+    def create_coach(self):
+        return Coach.objects.create(
+            user=User.objects.create(username=super(
+                CoachFactory, self).generate_random_string()),
+            date_of_birth=datetime.datetime.now(),
+            gender=random.choice(['M', 'F']),
+            phone=super(CoachFactory, self).generate_random_string(),
+            address=super(CoachFactory, self).generate_random_string(),
+            skype=super(CoachFactory, self).generate_random_string(),
+            description=super(CoachFactory, self).generate_random_string(),
+        )
+
+    def create_coachs(self, count=10):
+        coaches = []
+        for i in range(count):
+            coaches.append(self.create_coach())
+        return coaches
+
+
+class LessonFactory(Util):
+
+    def create_lesson(self, course=None):
+        return Lesson.objects.create(subject=super(CoachFaLessonFactoryctory, self).generate_random_string(),
+                                     description=super(
+                                         LessonFactory, self).generate_random_string(),
+                                     course=course,
+                                     order=random.randint(1, 100))
+
+
+class CoursesFactory(Util):
+    def __init__(self):
+        self.courses = []
+
+    def create_course(self, coach=None, assistant=None):
+        return Course.objects.create(name=super(CoursesFactory, self).generate_random_string(),
+                                     short_description=super(
+                                         CoursesFactory, self).generate_random_string(),
+                                     description=super(
+                                         CoursesFactory, self).generate_random_string(),
+                                     coach=coach, assistant=assistant)
 
 
 class CourseListTest(TestCase):
